@@ -1,10 +1,19 @@
 import requests
 from requests.auth import HTTPBasicAuth
+import logging
 import smtplib
 import json
 import sqlite3
 from email.message import EmailMessage
 from config import *
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+fh = logging.FileHandler('info.log')
+fh.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 
 def main():
@@ -26,6 +35,7 @@ def main():
             total_disk_space_gb / 1024
             )
         send_email(cur)
+    logger.info("No servers found matching search criteria")
 
 
 def send_email(obj):
@@ -41,6 +51,8 @@ def send_email(obj):
         msg['To'] = email_address
         print(msg)
         s.send_message(msg)
+        logger.info("Email sent")
+        logger.info(json.dumps(obj, indent=2))
 
 
 def already_sent(id):
