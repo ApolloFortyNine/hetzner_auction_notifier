@@ -1,0 +1,9 @@
+robot_username = ''
+robot_password = ''
+email_address = ''
+smtp_address = ''
+smtp_username = ''
+smtp_password = ''
+desired_price_euros = 18
+desired_benchmark = 8000
+desired_space_gb = 6000
